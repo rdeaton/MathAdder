@@ -1,0 +1,3 @@
+[submodule "MathAdder.activity/libraries/spyral"]
+	path = MathAdder.activity/libraries/spyral
+	url = git://github.com/rdeaton/spyral.git
