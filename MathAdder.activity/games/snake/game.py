@@ -378,7 +378,7 @@ class Snake(spyral.sprite.Sprite):
 			self.length = self.length+1
 
 class Game(spyral.scene.Scene):
-	def __init__(self, player):
+	def __init__(self, player, event_handler):
 		spyral.scene.Scene.__init__(self)
 
 		#Init Images
@@ -387,6 +387,7 @@ class Game(spyral.scene.Scene):
 		self.root_camera = spyral.director.get_camera()
 		self.camera = self.root_camera.make_child(virtual_size = (WIDTH,HEIGHT),layers=['other','food','operatorNodes','numberNodes','head','pop','level','score'])		
 		self.group = spyral.sprite.Group(self.camera)
+		self.eh = event_handler
 
 	def initApples(self):
 		foodItems = [Operator([],[],self.snake.location,self.player.level)]
@@ -938,7 +939,7 @@ class Game(spyral.scene.Scene):
 		self.root_camera.draw()
 
 	def update(self,tick):
-
+		self.eh.tick()
 		#render length of the snake
 		#self.snake.findLength()
 		#self.length.val = self.snake.length
@@ -957,7 +958,7 @@ class Game(spyral.scene.Scene):
 
                 #pop if they beat the game
                 if self.player.level.tempLevel == 9:
-                        for event in pygame.event.get():
+                        for event in self.eh.get():
 				if event.type == pygame.KEYDOWN:
 					self.scoreFlag = False
                                         self.player.totalScore = 0
@@ -969,7 +970,7 @@ class Game(spyral.scene.Scene):
 		#display score
 		#elif self.player.level.tempLevel > self.oldTempLevel and self.oldLevel >= 0:
                 elif self.scoreFlag:
-			for event in pygame.event.get():
+			for event in self.eh.get():
 				if event.type == pygame.KEYDOWN:
 					self.scoreBox.currentImage += 1
 			if self.scoreBox.currentImage > 2:
@@ -992,7 +993,7 @@ class Game(spyral.scene.Scene):
 			#self.scoreFlag = True
 			self.levelBox.render(self.player.level.currLevel+1)
 			self.oldTempLevel = self.player.level.tempLevel
-			for event in pygame.event.get():
+			for event in self.eh.get():
 				if event.type == pygame.KEYDOWN:
 					self.oldLevel = self.player.level.currLevel
 					self.levelBox.render(0)
@@ -1012,7 +1013,7 @@ class Game(spyral.scene.Scene):
 
 				#get keyboard input
 				newDirection = self.snake.direction
-				for event in pygame.event.get():
+				for event in self.eh.get():
 					if event.type == pygame.KEYDOWN:
 						if (event.key == pygame.K_e or event.key ==  pygame.K_KP1):
 							if (len(self.snake.nodes)==3 and self.snake.nodes[1].value == "/"

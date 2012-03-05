@@ -259,7 +259,7 @@ class Menu(spyral.scene.Scene):
 					if self.selected_button == 0:
 						# Start button clicked
 						# move to Game scene
-						spyral.director.push(Game(self.player))
+						spyral.director.push(Game(self.player, spyral.event.LiveEventHandler()))
 					
 					elif self.selected_button == 1:
 						# Character Select button clicked 
