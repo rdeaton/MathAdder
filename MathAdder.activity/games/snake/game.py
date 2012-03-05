@@ -383,7 +383,7 @@ class Game(spyral.scene.Scene):
 
 		#Init Images
 		self.player = player
-		self.clock.ticks_per_second = TICKS_PER_SECOND
+		self.clock.max_ups = TICKS_PER_SECOND
 		self.root_camera = spyral.director.get_camera()
 		self.camera = self.root_camera.make_child(virtual_size = (WIDTH,HEIGHT),layers=['other','food','operatorNodes','numberNodes','head','pop','level','score'])		
 		self.group = spyral.sprite.Group(self.camera)
