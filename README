@@ -1,1 +1,43 @@
-from a command line, run "python test_launcher.py -r 800 600"
+About
+=====
+Math Adder is an education game aimed at practicing some basics of arithmetic.
+It was originally written as a semester long project at the University of
+Delaware on educational game development targetting the OLPC XO laptops.
+
+Running the Game
+================
+Windows/Linux/OS X:
+	$ cd MathAdder.activity
+	$ python test_launcher.py
+	Additional options for launching the game fullscreen/at other resolutions
+	$ python test_launcher.py -h
+
+OLPC XO:
+	Method 1: Activity Bundle
+		An activity bundle (extension .xo) can be built on the XO or on another
+		machine with the following:
+		$ cd MathAdder.activity
+		$ python setup.py dist_xo
+		You can then copy the .xo to the XO and install it from the network,
+		a USB stick inside sugar.
+	Method 2: Development mode
+		With the source code on the XO, in the terminal activity,
+		$ cd MathAdder.activity
+		$ python setup.py dev
+		And then you can restart sugar with control + alt + erase, and the
+		it should show up as an activity inside sugar.
+
+Translating
+===========
+The first step for translating is to generate an up to date .pot file as the
+base for your translations. You can do this by running
+$ python setup.py genpot
+The resulting pot file will be in the po/ directory. Copy this to a po file
+for the language of your choosing, named with your language's country code. For 
+example, a spanish language translation should be named po/es.po
+
+To test your translated file, you must first build the compiled versions of the 
+translations. You can do this with
+$ python setup.py build
+and then run the game in the usual way.
+
