@@ -1,0 +1,3 @@
+# Ignore all files in this directory. It is purely for generated files
+*
+!.gitignore
