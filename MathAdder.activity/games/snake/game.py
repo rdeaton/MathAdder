@@ -4,6 +4,8 @@ import random
 import math
 import fractions
 from os import path
+from gettext import gettext as _
+from gettext import ngettext
 
 MOVES_PER_SECOND = 5
 TICKS_PER_SECOND = 15
@@ -87,7 +89,7 @@ class Score(spyral.sprite.Sprite):
 		self.render()
 
 	def render(self):
-		self.image = fonts['score'].render("SCORE: %d" % self.val,True,colors['score'])
+		self.image = fonts['score'].render(_("SCORE: %d") % self.val,True,colors['score'])
 		self.rect.midtop = (geom['scorex'],geom['text_height'])
 
 # self.express is a list of strings, each of which is a number or operator
@@ -119,7 +121,7 @@ class Goal(spyral.sprite.Sprite):
 		self.render()
 
 	def render(self):
-		self.image = fonts['goal'].render("Goal: %d" % self.val,True,colors['goal'])
+		self.image = fonts['goal'].render(_("Goal: %d") % self.val,True,colors['goal'])
 		self.rect.midtop = (geom['goalx'],geom['text_height_bottom'] + (BLOCK_SIZE/4))
 	
 	def isReached(self,snakeNodes):
@@ -139,7 +141,7 @@ class Length(spyral.sprite.Sprite):
 
 	def render(self):
 		if self.val != self.oldVal:
-			self.image = fonts['length'].render("Length: %d" % self.val,True,colors['length'])
+			self.image = fonts['length'].render(_("Length: %d") % self.val,True,colors['length'])
 			self.rect.midtop = (geom['lengthx'],geom['text_height_bottom'] + (BLOCK_SIZE/4))
 			self.oldVal = self.val
 
@@ -172,10 +174,7 @@ class PopUp(spyral.sprite.Sprite):
 		self.framesVisible = self.secondsVisible * TICKS_PER_SECOND
 		self.currentFrame = 0
 		if val == 'roll':
-			if game.rollsLeft != 1:
-				self.value = str(game.rollsLeft) + ' ROLLS LEFT'
-			else:
-				self.value = str(game.rollsLeft) + ' ROLL LEFT'
+		    self.value = ngettext("%d ROLL LEFT", "%d ROLLS LEFT", game.rollsLeft) % game.rollsLeft
 		elif val == 'zero':
 			self.value = '- ' + str(game.levelScore)
 		else:
@@ -1313,7 +1312,10 @@ def init():
 	colors['character_name'] = (255,255,255)
 	colors['character_color'] = (0,0,0)
 	
-	strings['characters'] = ["< Adder Adam >", "< Sal Amander >", "< Darryl Diamondback >", "< Colonel Caterpillar >"]
+	strings['characters'] = ["< %s >" % _("Adder Adam"),
+	                         "< %s >" % _("Sal Amander"),
+	                         "< %s >" % _("Darryl Diamondback"),
+	                         "< %s >" % _("Colonel Caterpillar")]
 	strings['char_sources'] = ["Adder","Anaconda","Diamondback","Caterpillar"]
 	
 	images['tablet'] = spyral.util.load_image(path.join('games/snake/Images/Other','Tablet.png'))
@@ -1429,7 +1431,7 @@ def init():
 	
 	geom['total_colors'] = 3
 	
-	images['tablet_instructions'] = fonts['goal'].render("Press Any Key To Continue",True,(0,0,0))
+	images['tablet_instructions'] = fonts['goal'].render(_("Press Any Key To Continue"), True, (0,0,0))
 
 	#images['head'] = pygame.image.load("games/snake/Images/Adder/Adder_Head_E0.png")
 	#images['head'].fill(colors['head'])
