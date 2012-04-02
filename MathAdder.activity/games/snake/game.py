@@ -383,10 +383,14 @@ class Game(spyral.scene.Scene):
 		#Init Images
 		self.player = player
 		self.clock.max_ups = TICKS_PER_SECOND
-		self.root_camera = spyral.director.get_camera()
-		self.camera = self.root_camera.make_child(virtual_size = (WIDTH,HEIGHT),layers=['other','food','operatorNodes','numberNodes','head','pop','level','score'])		
+		self.camera = spyral.director.get_camera().make_child(virtual_size = (WIDTH,HEIGHT),layers=['other','food','operatorNodes','numberNodes','head','pop','level','score'])		
 		self.group = spyral.sprite.Group(self.camera)
 		self.eh = event_handler
+		font = pygame.font.SysFont(None, 30)
+		from spyral.debug import FPSSprite
+		s = FPSSprite(font, (255, 255, 0))
+		s.pos = (10, 10)
+		self.group.add(s)
 
 	def initApples(self):
 		foodItems = [Operator([],[],self.snake.location,self.player.level)]
@@ -935,7 +939,6 @@ class Game(spyral.scene.Scene):
 				
 	def render(self):
 		self.group.draw()
-		self.root_camera.draw()
 
 	def update(self,tick):
 		self.eh.tick()

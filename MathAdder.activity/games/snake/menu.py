@@ -50,7 +50,7 @@ class Text(spyral.sprite.Sprite):
 				width = img.get_width()
 			height += img.get_height()
 		
-		image = pygame.Surface((width, height), flags=pygame.SRCALPHA)
+		image = spyral.util.new_surface((width, height))
 		y = 0
 		for img in lines:
 			dest = img.get_rect()
@@ -170,8 +170,7 @@ class Tablet(spyral.scene.Scene):
 	def __init__(self):
 		spyral.scene.Scene.__init__(self)
 		
-		self.root_camera = spyral.director.get_camera()
-		self.camera = self.root_camera.make_child(virtual_size = (WIDTH,HEIGHT))
+		self.camera = spyral.director.get_camera().make_child(virtual_size = (WIDTH,HEIGHT))
 		self.group = spyral.sprite.Group(self.camera)
 		
 		center = self.camera.get_rect().center
@@ -190,7 +189,6 @@ class Tablet(spyral.scene.Scene):
 		
 	def render(self):
 		self.group.draw()   # draw group of sprites
-		self.root_camera.draw()  # draw the current frame
 	
 	def update(self, tick):
 		for event in pygame.event.get():
@@ -206,8 +204,7 @@ class Menu(spyral.scene.Scene):
 		"""Construct the Menu scene"""
 		spyral.scene.Scene.__init__(self)
 		
-		self.root_camera = spyral.director.get_camera()
-		self.camera = self.root_camera.make_child(virtual_size = (WIDTH,HEIGHT))    
+		self.camera = spyral.director.get_camera().make_child(virtual_size = (WIDTH,HEIGHT))    
 		self.group = spyral.sprite.Group(self.camera)
 		self.player = player
 
@@ -237,7 +234,6 @@ class Menu(spyral.scene.Scene):
 	def render(self):
 		"""Render the current scene"""
 		self.group.draw()   # draw group of sprites
-		self.root_camera.draw()  # draw the current frame
 	
 	def update(self, tick):
 		"""Update the current scene based on user input"""
@@ -304,8 +300,7 @@ class CharacterSelect(spyral.scene.Scene):
 		# Init from the super class
 		spyral.scene.Scene.__init__(self)
 		
-		self.root_camera = spyral.director.get_camera()
-		self.camera = self.root_camera.make_child(virtual_size = (WIDTH,HEIGHT))    
+		self.camera = spyral.director.get_camera().make_child(virtual_size = (WIDTH,HEIGHT))    
 		self.group = spyral.sprite.Group(self.camera)
 		self.player = player
 		
@@ -347,7 +342,6 @@ class CharacterSelect(spyral.scene.Scene):
 	def render(self):
 		"""Render the current scene"""
 		self.group.draw()   # draw group of sprites
-		self.root_camera.draw()  # draw the current frame
 	
 	def update(self, tick):
 		"""Update the current scene based on user input"""
